@@ -1,15 +1,11 @@
-def common_items(list1, list2):
+def sum_zero(list1):
 
-    dict = {}
-    new_list = []
+    unique_nums = set(list1)
+    unique_pairs = set()
 
-    for item in list1:
-        dict.setdefault(item, [])
-        dict[item].append(item)
-    for item in list2:
-        dict.setdefault(item, [])
-        new_list.extend(dict[item])
+    
 
-    # return []
-common_items([1, 1, 2, 2], [1, 2, 3, 4])
-common_items([1, 2, 3, 4], [1, 1, 2, 2])
+
+
+
+sum_zero([1, 2, 3, -2, -1, 1, 0, 1, 0])

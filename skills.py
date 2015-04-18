@@ -66,66 +66,82 @@ def common_items(list1, list2):
     for item in list1:
         dict.setdefault(item, [])
         dict[item].append(item)
-        
+
     for item in list2:
         dict.setdefault(item, [])
         new_list.extend(dict[item])
 
     return new_list
 
-#
-# def unique_common_items(list1, list2):
-#     """Produce the set of *unique* common items in two lists.
-#
-#     Given two lists, return a list of the *unique* common items shared between
-#     the lists.
-#
-#     IMPORTANT: you may not not 'if ___ in ___' or the method 'index'.
-#
-#
-#     Just like `common_items`, this should find [1, 2]:
-#
-#         >>> sorted(unique_common_items([1, 2, 3, 4], [1, 2]))
-#         [1, 2]
-#
-#     However, now we only want unique items, so for these lists, don't show
-#     more than 1 or 2 once:
-#
-#         >>> sorted(unique_common_items([1, 2, 3, 4], [1, 1, 2, 2]))
-#         [1, 2]
-#
-#     """
-#
-#     return []
-#
-#
-# def sum_zero(list1):
-#     """Return list of x,y number pair lists from a list where x+y==0
-#
-#     Given a list of numbers, add up each individual pair of numbers.
-#     Return a list of each pair of numbers that adds up to 0.
-#
-#
-#     For example:
-#
-#         >>> sort_pairs( sum_zero([1, 2, 3, -2, -1]) )
-#         [[-2, 2], [-1, 1]]
-#
-#     This should always be a unique list, even if there are
-#     duplicates in the input list:
-#
-#         >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 1]) )
-#         [[-2, 2], [-1, 1]]
-#
-#     Of course, if there are one or more zeros to pair together,
-#     that's fine, too:
-#
-#         >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 0, 1, 0]) )
-#         [[-2, 2], [-1, 1], [0, 0]]
-#
-#     """
-#
-#     return []
+
+def unique_common_items(list1, list2):
+    """Produce the set of *unique* common items in two lists.
+
+    Given two lists, return a list of the *unique* common items shared between
+    the lists.
+
+    IMPORTANT: you may not not 'if ___ in ___' or the method 'index'.
+
+
+    Just like `common_items`, this should find [1, 2]:
+
+        >>> sorted(unique_common_items([1, 2, 3, 4], [1, 2]))
+        [1, 2]
+
+    However, now we only want unique items, so for these lists, don't show
+    more than 1 or 2 once:
+
+        >>> sorted(unique_common_items([1, 2, 3, 4], [1, 1, 2, 2]))
+        [1, 2]
+
+    """
+    set1 = set(list1)
+    set2 = set(list2)
+
+    return list(set1 & set2)
+
+
+def sum_zero(list1):
+    """Return list of x,y number pair lists from a list where x+y==0
+
+    Given a list of numbers, add up each individual pair of numbers.
+    Return a list of each pair of numbers that adds up to 0.
+
+
+    For example:
+
+        >>> sort_pairs( sum_zero([1, 2, 3, -2, -1]) )
+        [[-2, 2], [-1, 1]]
+
+    This should always be a unique list, even if there are
+    duplicates in the input list:
+
+        >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 1]) )
+        [[-2, 2], [-1, 1]]
+
+    Of course, if there are one or more zeros to pair together,
+    that's fine, too:
+
+        >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 0, 1, 0]) )
+        [[-2, 2], [-1, 1], [0, 0]]
+
+    """
+    unique_pairs = set()
+
+    for i in range(len(list1) - 1):
+        # print i
+        current_num = list1[i]
+        next_num = list1[i + 1]
+        sum = current_num + next_num
+        # print current_num, "+", next_num, "=", sum
+        if sum == 0:
+            unique_pairs.add((current_num, next_num))
+    return unique_pairs
+
+
+
+
+
 #
 #
 # def find_duplicates(words):
