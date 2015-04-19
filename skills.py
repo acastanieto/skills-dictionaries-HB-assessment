@@ -126,41 +126,39 @@ def sum_zero(list1):
         [[-2, 2], [-1, 1], [0, 0]]
 
     """
-    unique_pairs = set()
+    all_sums = set()
 
-    for i in range(len(list1) - 1):
-        # print i
-        current_num = list1[i]
-        next_num = list1[i + 1]
-        sum = current_num + next_num
-        # print current_num, "+", next_num, "=", sum
-        if sum == 0:
-            unique_pairs.add((current_num, next_num))
-    return unique_pairs
+    for index, num in enumerate(list1):
+        for next_num in list1[index + 1:]:
+            sum = num + next_num
+            if sum == 0:
+                all_sums.add(tuple(sorted([num, next_num])))
+
+    return list(all_sums) 
 
 
 
 
 
-#
-#
+
+
 # def find_duplicates(words):
 #     """Given a list of words, return the list with duplicates removed.
-#
+
 #     For example:
-#
+
 #         >>> sorted(find_duplicates(
 #         ...     ["rose", "is", "a", "rose", "is", "a", "rose"]))
 #         ['a', 'is', 'rose']
-#
+
 #     You should treat differently-capitalized words as different:
-#
+
 #         >>> sorted(find_duplicates(
 #         ...     ["Rose", "is", "a", "rose", "is", "a", "rose"]))
 #         ['Rose', 'a', 'is', 'rose']
-#
+
 #     """
-#
+
 #     return []
 #
 #
