@@ -4,6 +4,7 @@ ADVANCED = True
 from collections import Counter
 
 def count_unique(string1):
+
     """Count unique words in a string.
 
     This function should take a single string and return a dictionary
@@ -31,7 +32,11 @@ def count_unique(string1):
     """
 
     return Counter(string1.split(" ")) # Split string into list, create a Counter from list.
-
+    # another way without the Counter:
+    # word_counts = {}
+    # for word in string1.split(" "):
+    #     word_counts[word] = word_counts.get(word, 0) + 1
+    # return word_counts
 
 
 
@@ -60,17 +65,24 @@ def common_items(list1, list2):
         >>> sorted(common_items([1, 1, 2, 2], [1, 2, 3, 4]))
         [1, 1, 2, 2]
 
+    Angela's doctest
+
+        >>> sorted(common_items([2, 5, 9, 10], [2, 5, 5, 9, 9]))
+        [2, 5, 5, 9, 9]
+
     """
     dict = {}
     new_list = []
 
     for num in list1:            # iterates through the list1
-        dict.setdefault(num, []) # add nums to dictionary (dict) as key and set value to [] (empty list); if 
+        dict.setdefault(num, []) # add nums to dictionary (dict) as key and set value to [] (empty list); if
                                  # key already in dictionary, then no changes made (value returned)
         dict[num].append(num)    # append num to list that is the value of the num key
-    for num in list2:                # iterates through list2   
-        dict.setdefault(num, [])     # if num not a key in the dictionary, adds num and sets value to [] 
-        new_list.extend(dict[num])   # for each time num is in list2, if it is already in the dictionary, extends new_list by the value
+
+    for num in list2:                # iterates through list2
+        new_list.extend(dict.get(num, []))   # looks each num up in the dictionary; if num found as key, its
+                                             # value is added to new_list via extend; otherwise a blank list
+                                             # added to new_list via extend, which results in no change to new_list
     return new_list
 
 
@@ -94,11 +106,17 @@ def unique_common_items(list1, list2):
         >>> sorted(unique_common_items([1, 2, 3, 4], [1, 1, 2, 2]))
         [1, 2]
 
+    Angela's doctest
+
+        >>> sorted(unique_common_items([2, 5, 9, 10], [2, 5, 5, 9, 9]))
+        [2, 5, 9]
+
     """
     set1 = set(list1)
     set2 = set(list2)
 
-    return list(set1 & set2) # created sets from list1 and list2 and used set math operator & to find unique common numbers
+    return list(set1 & set2) # created sets from list1 and list2 and used set
+                             # math operator & to find unique common numbers
 
 
 def sum_zero(list1):
@@ -132,7 +150,7 @@ def sum_zero(list1):
         for next_num in list1[index + 1:]:  # the sum of the num and each number after it (next_num) is found (on next line)
             sum = num + next_num            # here the sum of num and next_num is found
             if sum == 0:                    # then each sum is checked to see if == 0, and if so...
-                all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version 
+                all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version
                                                               # of this list is then added to the all_sums set to get rid of duplicate
                                                               # tuples.  (Note:  the number pairs are 1st sorted so that, for example,
                                                               # (1, -1) and (-1, 1) aren't treated as two unique pairs)
@@ -190,7 +208,7 @@ def word_length(words):
     for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
         word_tuple = (length, word_length_dict[length])  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
                                                          # the length, and a list of the words of that length
-        word_length_list.append(word_tuple)              # appends the tuple to word_length_list 
+        word_length_list.append(word_tuple)              # appends the tuple to word_length_list
 
     return sorted(word_length_list)                      # returns a sorted copy of word_length_list
 
@@ -266,10 +284,10 @@ def pirate_talk(phrase):
     translated_words = [] # initialize empty list for the translated words to go into
     english_words = phrase.split(" ") # make list of the words of the english input string
 
-    for word in english_words: 
-       
+    for word in english_words:
+
         if word in pirate_translations: # first checks if word is in the pirate dictionary
-            translated_words.append(pirate_translations[word]) # if it is, the value of that word, which is the translated pirate word, is 
+            translated_words.append(pirate_translations[word]) # if it is, the value of that word, which is the translated pirate word, is
                                                                # appended to the translated_words list
         else:
             translated_words.append(word)                      # if it isn't in the pirate dictionary, the (untranslated) word is added to the
@@ -304,11 +322,11 @@ def adv_word_length_sorted_words(words):
     for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
         word_tuple = (length, sorted(word_length_dict[length]))  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
                                                          # the length, and a list of the words of that length
-        word_length_list.append(word_tuple)              # appends the tuple to word_length_list 
+        word_length_list.append(word_tuple)              # appends the tuple to word_length_list
 
     return sorted(word_length_list)                      # returns a sorted copy of word_length_list
 
- 
+
 # ##############################################################################
 # You can ignore everything after here
 
