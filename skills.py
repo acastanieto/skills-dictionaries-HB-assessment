@@ -182,64 +182,101 @@ def word_length(words):
     word_length_list = []
 
     for word in words:
-        word_length_dict.setdefault(len(word), []) # for each word in list of words, adds its lenght to word_length_dict dictionary with empty list
+        word_length_dict.setdefault(len(word), []) # for each word in list of words, adds its length to word_length_dict dictionary with empty list
                                                    # as value; if already in dictionary, no changes made (returns value)
         word_length_dict[len(word)].append(word)   # for each word in list of words, appends the word to the value list belonging to the key
                                                     # that is the length of the word
 
     for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
-        word_tuple = (length, word_length_dict[length])  # for each length, Python finds it in word_length_dict and makes a tuple of
-                                                         # the length and a list of the words of that length
+        word_tuple = (length, word_length_dict[length])  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
+                                                         # the length, and a list of the words of that length
         word_length_list.append(word_tuple)              # appends the tuple to word_length_list 
 
     return sorted(word_length_list)                      # returns a sorted copy of word_length_list
-#
-#
-# def pirate_talk(phrase):
-#     """Translate phrase to pirate talk.
-#
-#     Given a phrase, translate each word to the Pirate-speak equivalent.
-#     Words that cannot be translated into Pirate-speak should pass through
-#     unchanged. Return the resulting sentence.
-#
-#     Here's a table of English to Pirate translations:
-#
-#     English     Pirate
-#     ----------  ----------------
-#     sir         matey
-#     hotel       fleabag inn
-#     student     swabbie
-#     boy         matey
-#     madam       proud beauty
-#     professor   foul blaggart
-#     restaurant  galley
-#     your        yer
-#     excuse      arr
-#     students    swabbies
-#     are         be
-#     lawyer      foul blaggart
-#     the         th'
-#     restroom    head
-#     my          me
-#     hello       avast
-#     is          be
-#     man         matey
-#
-#     For example:
-#
-#         >>> pirate_talk("my student is not a man")
-#         'me swabbie be not a matey'
-#
-#     You should treat words with punctuation as if they were different
-#     words:
-#
-#         >>> pirate_talk("my student is not a man!")
-#         'me swabbie be not a man!'
-#
-#     """
-#
-#     return ""
-#
+
+
+def pirate_talk(phrase):
+    """Translate phrase to pirate talk.
+
+    Given a phrase, translate each word to the Pirate-speak equivalent.
+    Words that cannot be translated into Pirate-speak should pass through
+    unchanged. Return the resulting sentence.
+
+    Here's a table of English to Pirate translations:
+
+    English     Pirate
+    ----------  ----------------
+    sir         matey
+    hotel       fleabag inn
+    student     swabbie
+    boy         matey
+    madam       proud beauty
+    professor   foul blaggart
+    restaurant  galley
+    your        yer
+    excuse      arr
+    students    swabbies
+    are         be
+    lawyer      foul blaggart
+    the         th'
+    restroom    head
+    my          me
+    hello       avast
+    is          be
+    man         matey
+
+    For example:
+
+        >>> pirate_talk("my student is not a man")
+        'me swabbie be not a matey'
+
+    You should treat words with punctuation as if they were different
+    words:
+
+        >>> pirate_talk("my student is not a man!")
+        'me swabbie be not a man!'
+
+    """
+    # Approach:  first make a dictionary of English:Pirate key:value pairs.  Then make a list of the words of the input string, then iterate through the list.  For each word in the list, find it in the dictionary and add its value to a new_list.  Be sure to add condition statement if word not in dictionary. Lastly, join the words in the new_list.
+
+def pirate_talk(phrase):
+    # Approach:  first make a dictionary of English:Pirate key:value pairs.  Then make a list of the words of the input string, then iterate through the list.  For each word in the list, find it in the dictionary and add its value to a new_list.  Be sure to add condition statement if word not in dictionary. Lastly, join the words in the new_list.
+
+    pirate_translations = {
+        "sir": "matey",
+        "hotel": "fleabag inn",
+        "student": "swabbie",
+        "boy": "matey",
+        "madam": "proud beauty",
+        "professor": "foul blaggart",
+        "restaurant": "galley",
+        "your": "yer",
+        "excuse": "arr",
+        "students": "swabbies",
+        "are": "be",
+        "lawyer": "foul blaggart",
+        "the": "th'",
+        "restroom": "head",
+        "my": "me",
+        "hello": "avast",
+        "is": "be",
+        "man": "matey"
+    } # dictionary of english:pirate translations as key:value pairs
+
+    translated_words = [] # initialize empty list for the translated words to go into
+    english_words = phrase.split(" ") # make list of the words of the english input string
+
+    for word in english_words: 
+       
+        if word in pirate_translations: # first checks if word is in the pirate dictionary
+            translated_words.append(pirate_translations[word]) # if it is, the value of that word, which is the translated pirate word, is 
+                                                               # appended to the translated_words list
+        else:
+            translated_words.append(word)                      # if it isn't in the pirate dictionary, the (untranslated) word is added to the
+                                                               # translated_words list
+
+    return " ".join(translated_words)                           # a string of the joined words of translated_words list is returned
+
 # def adv_word_length_sorted_words(words):
 #     """Given list of words, return list of ascending [(len, [sorted-words])].
 #
