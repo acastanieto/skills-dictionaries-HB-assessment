@@ -142,25 +142,25 @@ def sum_zero(list1):
 
 
 
-# def find_duplicates(words):
-#     """Given a list of words, return the list with duplicates removed.
+def find_duplicates(words):
+    """Given a list of words, return the list with duplicates removed.
 
-#     For example:
+    For example:
 
-#         >>> sorted(find_duplicates(
-#         ...     ["rose", "is", "a", "rose", "is", "a", "rose"]))
-#         ['a', 'is', 'rose']
+        >>> sorted(find_duplicates(
+        ...     ["rose", "is", "a", "rose", "is", "a", "rose"]))
+        ['a', 'is', 'rose']
 
-#     You should treat differently-capitalized words as different:
+    You should treat differently-capitalized words as different:
 
-#         >>> sorted(find_duplicates(
-#         ...     ["Rose", "is", "a", "rose", "is", "a", "rose"]))
-#         ['Rose', 'a', 'is', 'rose']
+        >>> sorted(find_duplicates(
+        ...     ["Rose", "is", "a", "rose", "is", "a", "rose"]))
+        ['Rose', 'a', 'is', 'rose']
 
-#     """
+    """
 
-#     return []
-#
+    return set(words)
+
 #
 # def word_length(words):
 #     """Given list of words, return list of ascending [(len, [words])].
