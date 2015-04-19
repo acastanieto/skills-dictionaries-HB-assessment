@@ -74,16 +74,20 @@ def common_items(list1, list2):
     dict = {}
     new_list = []
 
-    for num in list1:            # iterates through the list1
-        dict.setdefault(num, []) # add nums to dictionary (dict) as key and set value to [] (empty list); if
-                                 # key already in dictionary, then no changes made (value returned)
-        dict[num].append(num)    # append num to list that is the value of the num key
+    [dict.setdefault(num, []).append(num) for num in list1]
+     # iterates through list1, finds value of num key in dictionary (dict),
+     # if key in dictionary, num appended to the value list; if key not in
+     # dictionary, is added and empty list is made the value, then num is
+     # appended
 
-    for num in list2:                # iterates through list2
-        new_list.extend(dict.get(num, []))   # looks each num up in the dictionary; if num found as key, its
-                                             # value is added to new_list via extend; otherwise a blank list
-                                             # added to new_list via extend, which results in no change to new_list
+    [new_list.extend(dict.get(num, [])) for num in list2]
+     # iterates through list2, looks each num up in the dictionary; if num
+     # found as key, its value is added to new_list via extend; otherwise
+     # an empty list added to new_list via extend, which results in no
+     # change to new_list
+
     return new_list
+
 
 
 def unique_common_items(list1, list2):
@@ -146,14 +150,21 @@ def sum_zero(list1):
     """
     all_sums = set()
 
-    for index, num in enumerate(list1):     # for each num in list1:
-        for next_num in list1[index + 1:]:  # the sum of the num and each number after it (next_num) is found (on next line)
-            sum = num + next_num            # here the sum of num and next_num is found
-            if sum == 0:                    # then each sum is checked to see if == 0, and if so...
-                all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version
-                                                              # of this list is then added to the all_sums set to get rid of duplicate
-                                                              # tuples.  (Note:  the number pairs are 1st sorted so that, for example,
-                                                              # (1, -1) and (-1, 1) aren't treated as two unique pairs)
+    # this list comprehension ended up being ridiculously long
+    [[all_sums.add(tuple(sorted([num, next_num])))
+     for next_num in list1[index + 1:] if num + next_num == 0]
+     for (index, num) in enumerate(list1)]
+
+    #  here it is written out without using list comprehension - I was wondering
+    #  which would be the better practice?
+    # for index, num in enumerate(list1):                       # for each num in list1:
+    #     for next_num in list1[index + 1:]:                    # the sum of the num and each number after it (next_num) is found (on next line)
+    #                                                           # here the sum of num and next_num is found
+    #         if num + next_num == 0:                           # then each sum is checked to see if == 0, and if so...
+    #             all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version
+    #                                                           #  of this list is then added to the all_sums set to get rid of duplicate
+    #                                                           #  tuples.  (Note:  the number pairs are 1st sorted so that, for example,
+    #                                                           #  (1, -1) and (-1, 1) aren't treated as two unique pairs)
 
     return list(all_sums) # to return a list, a list is made of the all_sums set and that is what is returned
 
@@ -199,18 +210,24 @@ def word_length(words):
     word_length_dict = {}
     word_length_list = []
 
-    for word in words:
-        word_length_dict.setdefault(len(word), []) # for each word in list of words, adds its length to word_length_dict dictionary with empty list
-                                                   # as value; if already in dictionary, no changes made (returns value)
-        word_length_dict[len(word)].append(word)   # for each word in list of words, appends the word to the value list belonging to the key
+    [word_length_dict.setdefault(len(word), []).append(word) for word in words]
+
+    # for word in words:
+    #     word_length_dict.setdefault(len(word), []).append(word) # for each word in list of words, adds its length to word_length_dict dictionary with empty list
+    #                                                # as value; if already in dictionary, no changes made (returns value)
+    #     # word_length_dict[len(word)].append(word)   # for each word in list of words, appends the word to the value list belonging to the key
                                                     # that is the length of the word
 
-    for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
-        word_tuple = (length, word_length_dict[length])  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
-                                                         # the length, and a list of the words of that length
-        word_length_list.append(word_tuple)              # appends the tuple to word_length_list
 
-    return sorted(word_length_list)                      # returns a sorted copy of word_length_list
+    [word_length_list.append((length, word_length_dict[length]))
+     for length in word_length_dict]
+
+    #  iterates through a list of word lengths, the word_length_dict keys
+    #  (same as word_length_dict.keys()) for each length, Python finds it in
+    #  word_length_dict and makes a tuple of two things: the length, and a list
+    #  of the words of that length appends the tuple to word_length_list
+
+    return sorted(word_length_list) # returns a sorted copy of word_length_list
 
 
 def pirate_talk(phrase):
@@ -282,18 +299,21 @@ def pirate_talk(phrase):
     } # dictionary of english:pirate translations as key:value pairs
 
     translated_words = [] # initialize empty list for the translated words to go into
-    english_words = phrase.split(" ") # make list of the words of the english input string
 
-    for word in english_words:
+    # the extended version of this list comprehension is written out below in the comments
+    [translated_words.append(pirate_translations[word]) if word in pirate_translations
+    else translated_words.append(word) for word in phrase.split(" ")]
 
-        if word in pirate_translations: # first checks if word is in the pirate dictionary
-            translated_words.append(pirate_translations[word]) # if it is, the value of that word, which is the translated pirate word, is
-                                                               # appended to the translated_words list
-        else:
-            translated_words.append(word)                      # if it isn't in the pirate dictionary, the (untranslated) word is added to the
-                                                               # translated_words list
+    # for word in phrase.split(" "):
+    #
+    #     if word in pirate_translations:                           # first checks if word is in the pirate dictionary
+    #         translated_words.append(pirate_translations[word])    # if it is, the value of that word, which is the translated pirate word, is
+    #                                                               # appended to the translated_words list
+    #     else:
+    #         translated_words.append(word)                         # if it isn't in the pirate dictionary, the (untranslated) word is added to the
+    #                                                               # translated_words list
 
-    return " ".join(translated_words)                           # a string of the joined words of translated_words list is returned
+    return " ".join(translated_words) # a string of the joined words of translated_words list is returned
 
 def adv_word_length_sorted_words(words):
     """Given list of words, return list of ascending [(len, [sorted-words])].
@@ -313,18 +333,32 @@ def adv_word_length_sorted_words(words):
     word_length_dict = {}
     word_length_list = []
 
-    for word in words:
-        word_length_dict.setdefault(len(word), []) # for each word in list of words, adds its length to word_length_dict dictionary with empty list
-                                                   # as value; if already in dictionary, no changes made (returns value)
-        word_length_dict[len(word)].append(word)   # for each word in list of words, appends the word to the value list belonging to the key
+    # written out statements of this list comprehension are below
+    [word_length_dict.setdefault(len(word), []).append(word) for word in words]
+
+    # for word in words:
+    #     word_length_dict.setdefault(len(word), []).append(word) # for each word in list of words, adds its length to word_length_dict dictionary with empty list
+    #                                                # as value; if already in dictionary, no changes made (returns value)
+    #     # word_length_dict[len(word)].append(word)   # for each word in list of words, appends the word to the value list belonging to the key
                                                     # that is the length of the word
 
-    for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
-        word_tuple = (length, sorted(word_length_dict[length]))  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
-                                                         # the length, and a list of the words of that length
-        word_length_list.append(word_tuple)              # appends the tuple to word_length_list
+    # written out statements of this list comprehension are below
+    [word_length_list.append((length, sorted(word_length_dict[length])))
+     for length in word_length_dict]
 
-    return sorted(word_length_list)                      # returns a sorted copy of word_length_list
+    #  iterates through a list of word lengths, the word_length_dict keys
+    #  (same as word_length_dict.keys()) for each length, Python finds it in
+    #  word_length_dict and makes a tuple of two things: the length, and a list
+    #  of the words of that length appends the tuple to word_length_list
+
+
+    # for length in word_length_dict.keys(): # iterates through a list of word lengths, the word_length_dict keys (word_length_dict.keys())
+    #     word_tuple = (length, sorted(word_length_dict[length]))  # for each length, Python finds it in word_length_dict and makes a tuple of two things:
+    #                                                      # the length, and a list of the words of that length
+    #     word_length_list.append(word_tuple)              # appends the tuple to word_length_list
+
+
+    return sorted(word_length_list) # returns a sorted copy of word_length_list
 
 
 # ##############################################################################
