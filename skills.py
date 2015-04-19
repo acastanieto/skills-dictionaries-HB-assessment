@@ -30,7 +30,8 @@ def count_unique(string1):
 
     """
 
-    return Counter(string1.split(" "))
+    return Counter(string1.split(" ")) # Split string into list, create a Counter from list.
+                                       
 
 
 
@@ -63,14 +64,13 @@ def common_items(list1, list2):
     dict = {}
     new_list = []
 
-    for item in list1:
-        dict.setdefault(item, [])
-        dict[item].append(item)
-
-    for item in list2:
-        dict.setdefault(item, [])
-        new_list.extend(dict[item])
-
+    for num in list1:            # iterates through the list1
+        dict.setdefault(num, []) # add nums to dictionary (dict) as key and set value to [] (empty list); if 
+                                 # key already in dictionary, then no changes made (value returned)
+        dict[num].append(num)    # append num to list that is the value of the num key
+    for num in list2:                # iterates through list2   
+        dict.setdefault(num, [])     # if num not a key in the dictionary, adds num and sets value to [] 
+        new_list.extend(dict[num])   # for each time num is in list2, if it is already in the dictionary, extends new_list by the value
     return new_list
 
 
@@ -98,7 +98,7 @@ def unique_common_items(list1, list2):
     set1 = set(list1)
     set2 = set(list2)
 
-    return list(set1 & set2)
+    return list(set1 & set2) # created sets from list1 and list2 and used set math operator & to find unique common numbers
 
 
 def sum_zero(list1):
@@ -128,13 +128,16 @@ def sum_zero(list1):
     """
     all_sums = set()
 
-    for index, num in enumerate(list1):
-        for next_num in list1[index + 1:]:
-            sum = num + next_num
-            if sum == 0:
-                all_sums.add(tuple(sorted([num, next_num])))
+    for index, num in enumerate(list1):     # for each num in list1:
+        for next_num in list1[index + 1:]:  # the sum of the num and each number after it (next_num) is found (on next line)
+            sum = num + next_num            # here the sum of num and next_num is found
+            if sum == 0:                    # then each sum is checked to see if == 0, and if so...
+                all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version 
+                                                              # of this list is then added to the all_sums set to get rid of duplicate
+                                                              # tuples.  (Note:  the number pairs are 1st sorted so that, for example,
+                                                              # (1, -1) and (-1, 1) aren't treated as two unique pairs)
 
-    return list(all_sums) 
+    return list(all_sums) # to return a list, a list is made of the all_sums set and that is what is returned
 
 
 
@@ -159,24 +162,24 @@ def find_duplicates(words):
 
     """
 
-    return set(words)
+    return set(words) # a set is made of the input list of words.  This gets rid of any duplicate words.
 
-#
-# def word_length(words):
-#     """Given list of words, return list of ascending [(len, [words])].
-#
-#     Given a list of words, return a list of tuples, ordered by word-length.
-#     Each tuple should have two items--the length of the words for that
-#     word-length, and the list of words of that word length.
-#
-#     For example:
-#
-#         >>> word_length(["ok", "an", "apple", "a", "day"])
-#         [(1, ['a']), (2, ['ok', 'an']), (3, ['day']), (5, ['apple'])]
-#
-#     """
-#
-#     return []
+
+def word_length(words):
+    """Given list of words, return list of ascending [(len, [words])].
+
+    Given a list of words, return a list of tuples, ordered by word-length.
+    Each tuple should have two items--the length of the words for that
+    word-length, and the list of words of that word length.
+
+    For example:
+
+        >>> word_length(["ok", "an", "apple", "a", "day"])
+        [(1, ['a']), (2, ['ok', 'an']), (3, ['day']), (5, ['apple'])]
+
+    """
+    # 
+    return []
 #
 #
 # def pirate_talk(phrase):
