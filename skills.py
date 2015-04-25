@@ -147,26 +147,62 @@ def sum_zero(list1):
         >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 0, 1, 0]) )
         [[-2, 2], [-1, 1], [0, 0]]
 
+        >>> sort_pairs( sum_zero([1, 2, 3, -2, -1, 1, 0, 1]) )
+        [[-2, 2], [-1, 1], [0, 0]]
+
     """
-    all_sums = set()
+    # ## This first solution is written under the assumption that I need to leave
+    # ## duplicates in the input list because 0's only pair up if there are at
+    # ## least two in the list.  I wrote another solution below under the
+    # ## assumption that one zero in the list counts as a pair.
+    # all_sums = set()
+    #
+    # # this list comprehension ended up being ridiculously long
+    # [[all_sums.add(tuple(sorted([num, next_num])))
+    #  for next_num in list1[index + 1:] if num + next_num == 0]
+    #  for (index, num) in enumerate(list1)]
+    #
+    # #  here it is written out without using list comprehension - I was wondering
+    # #  which would be the better practice?
+    # # for index, num in enumerate(list1):                       # for each num in list1:
+    # #     for next_num in list1[index + 1:]:                    # the sum of the num and each number after it (next_num) is found (on next line)
+    # #                                                           # here the sum of num and next_num is found
+    # #         if num + next_num == 0:                           # then each sum is checked to see if == 0, and if so...
+    # #             all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version
+    # #                                                           #  of this list is then added to the all_sums set to get rid of duplicate
+    # #                                                           #  tuples.  (Note:  the number pairs are 1st sorted so that, for example,
+    # #                                                           #  (1, -1) and (-1, 1) aren't treated as two unique pairs)
+    #
+    # return list(all_sums) # to return a list, a list is made of the all_sums set and that is what is returned
+    #
 
-    # this list comprehension ended up being ridiculously long
-    [[all_sums.add(tuple(sorted([num, next_num])))
-     for next_num in list1[index + 1:] if num + next_num == 0]
-     for (index, num) in enumerate(list1)]
 
-    #  here it is written out without using list comprehension - I was wondering
-    #  which would be the better practice?
-    # for index, num in enumerate(list1):                       # for each num in list1:
-    #     for next_num in list1[index + 1:]:                    # the sum of the num and each number after it (next_num) is found (on next line)
-    #                                                           # here the sum of num and next_num is found
-    #         if num + next_num == 0:                           # then each sum is checked to see if == 0, and if so...
-    #             all_sums.add(tuple(sorted([num, next_num])))  # num and next_num are made into a list.  A tuple of the sorted version
-    #                                                           #  of this list is then added to the all_sums set to get rid of duplicate
-    #                                                           #  tuples.  (Note:  the number pairs are 1st sorted so that, for example,
-    #                                                           #  (1, -1) and (-1, 1) aren't treated as two unique pairs)
+    ## This following solution is under the assumption that one zero in the list counts as a pair.
 
-    return list(all_sums) # to return a list, a list is made of the all_sums set and that is what is returned
+    # First convert to the input list to set to get rid of duplicates.
+     # Next iterate over set1
+     # and if its negative value also in set1, append it to new_list.  However,
+     # to avoid having to sort and get rid of duplicate pairs, only add the
+     # number and its negative value if the iterator is the positive number of
+     # the pair (so each pair is only added once).  This way you can also control
+     # the order within each pair.
+
+    set1 = set(list1)
+    
+    # new_list = []
+    # for num in set1:
+    #     if num >= 0 and -num in set1:
+    #         new_list.append([num, -num])
+    #
+    #
+    #
+    # return new_list
+
+    # list comprehension version:
+
+    return [[-num, num] for num in set1 if num >= 0 and -num in set1]
+
+
 
 
 
